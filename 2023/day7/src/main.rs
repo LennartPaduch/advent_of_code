@@ -6,7 +6,8 @@ struct Hand {
     hand_strength: usize,
     bid: u64,
 }
-
+// 253866470
+//254494947
 fn main() {
     let input = std::fs::read_to_string("input.txt").unwrap();
     let hands: Vec<&str> = input.lines().collect();
@@ -112,12 +113,10 @@ fn determine_hand_strength(cards: &str, is_joker_enabled: bool) -> (usize, Vec<u
                 }
                 return (3, translated_hands);
             }
-            if joker_count == 1 {
-                return (4, translated_hands);
+            if joker_count == 1 || joker_count == 2 {
+                return (3 + joker_count, translated_hands);
             }
-            if joker_count == 2 {
-                return (5, translated_hands);
-            }
+
             return (2 + joker_count, translated_hands);
         }
         2 => {
@@ -127,7 +126,7 @@ fn determine_hand_strength(cards: &str, is_joker_enabled: bool) -> (usize, Vec<u
                 }
                 return (6, translated_hands);
             }
-            if joker_count == 2 || joker_count == 3 {
+            if joker_count > 0 {
                 return (6, translated_hands);
             }
             return (4, translated_hands);
